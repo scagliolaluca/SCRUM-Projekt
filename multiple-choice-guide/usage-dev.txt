@@ -1,0 +1,4 @@
+1. download multiple-choice-guide
+2. go to chrome://extensions/
+3. enable developer mode (top right)
+4. click on "load unpacked" and choose local multiple-choice-guide folder
