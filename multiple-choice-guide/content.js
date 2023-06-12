@@ -40,16 +40,49 @@ function keywordsHighlighter(options) {
 		return skip;
 	}
 
+  function addHighlightsTest(node, keywords, options){
+    
+    var i;
+    for (i = 0; i < keywords.length; i++) {
+      var keyword = keywords[i].toLowerCase();
+      const regex = new RegExp('\\b${keyword}\\b', 'gi');
+      const highlightedText = `<span style="background-color: yellow">${keyword}</span>`;
+      const highlightedPageText = node.replace(regex, highlightedText);
+      document.body.innerHTML = highlightedPageText;
+    }
+  }
+
 
 	//var keywords = options.keywords.split(","); //Maybe add predefined Keywords right here
-  var keywords = "one,two,best,answer,answers".split(',');
+  var keywords = "minimum,maximum,team,developers,developer,master,daily,best answers,best answer,increment,valuable,true,false".split(',');
 	//delete options.keywords;
 	addHighlights(document.body, keywords, options);
+  //addHighlightsTest(document.body.innerText, keywords, options);
 
 }
 
+//var buttonKnopf = document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-right button-next");
+//if (buttonKnopf.length != 0){
+//  buttonKnopf.addEventListener("click", runHighlighter, false);
+//}
 function runHighlighter(){          
+  //setTimeout(keywordsHighlighter({foreground: '#000000', background: '#ffff00'}), 10000);
   keywordsHighlighter({foreground: '#000000', background: '#ffff00'}) 
+
 }
 
-setInterval(runHighlighter, 1000) //call function every 1000milliseconds to run it on every new question
+//setInterval(runHighlighter, 1000) //call function every 1000milliseconds to run it on every new question
+
+
+
+function loadCheck() { //highlights page after clicking, but not the new page
+  if (document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-right button-next").length != 0){
+    button = document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-right button-next");
+    button[0].addEventListener("click", runHighlighter);
+  }
+  else{
+    setTimeout(loadCheck, 15);
+  }
+}
+
+loadCheck();
