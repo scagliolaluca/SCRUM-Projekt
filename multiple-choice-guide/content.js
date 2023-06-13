@@ -71,14 +71,78 @@ function runHighlighter(){
 
 }
 
-//setInterval(runHighlighter, 1000) //call function every 1000milliseconds to run it on every new question
+setInterval(runHighlighter, 1000) //call function every 1000milliseconds to run it on every new question
 
 
+function showPopup(crossedQuestions) {
+
+	// set size of popupWindow
+	var screenWidth = window.screen.availWidth;
+	var screenHeight = window.screen.availHeight;
+	var popupWidth = screenWidth/3;
+	var popupHeight = screenHeight/3;
+	var popupLeft = (screenWidth - popupWidth) / 2;
+	var popupTop = (screenHeight - popupHeight) / 2;
+
+	var popup = window.open("", "_blank", `width=${popupWidth},height=${popupHeight},left=${popupLeft},top=${popupTop}`);
+
+	// Create the popup window
+	var popupContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Popup Window</title>
+      <style>
+        body {
+          	text-align: center;
+        }
+		h2 {
+			font-size: 5vw;
+		}
+		p  {
+			font-size: 3vw;
+		}
+		button {
+			font-size: 3vw;
+		}
+      </style>
+    </head>
+    <body>
+      <h2>Wrong amount of Questions crossed!</h2>
+      <p> ${crossedQuestions} </p>
+	  <button id="okButton">OK</button>
+    </body>
+    </html>
+  `;
+ 
+  popupContent = popupContent.replace("${crossedQuestions}", crossedQuestions);
+  
+  popup.document.open();
+  popup.document.write(popupContent);
+  popup.document.close();
+
+  // destroy popupWindow when okButton is clicked
+  var okButton = popup.document.getElementById("okButton");
+  okButton.addEventListener("click", function() {
+	popup.close();
+  });
+}
+  
+function checkForPopup(){ // check if Popup is needed or not
+
+	//call function to get number of currently crossed questions
+	//get number of wanted crossed questions
+	//compare them, if unequal-->write string and showPopup
+	// write string to be printed out in popup-window here
+	crossedQuestions = "Multiple-choice-guide detected, that you crossed 3";
+	
+	showPopup(crossedQuestions)
+}
 
 function loadCheck() { //highlights page after clicking, but not the new page
   if (document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-right button-next").length != 0){
     button = document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-right button-next");
-    button[0].addEventListener("click", runHighlighter);
+    button[0].addEventListener("click", checkForPopup);
   }
   else{
     setTimeout(loadCheck, 15);
