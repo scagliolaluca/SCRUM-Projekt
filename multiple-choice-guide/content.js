@@ -1,4 +1,6 @@
+var number_of_ticks = 0;
 function keywordsHighlighter(options) {
+
 	var occurrences = 0;
 
 	function highlight(node, pos, keyword, options) {
@@ -14,6 +16,19 @@ function keywordsHighlighter(options) {
 		span.appendChild(highlightedClone);
 		highlighted.parentNode.replaceChild(span, highlighted);
 
+		switch (highlighted.data){
+			case "three": number_of_ticks = 3;
+				break;
+			case "best answer": number_of_ticks = 1;
+				break;
+			case "False": number_of_ticks = 1;
+				break;
+			case "best two answers": number_of_ticks = 2;
+				break;
+			case "one": number_of_ticks = 1;
+				break;
+			default: break;
+		}
 		occurrences++;
 	}
 
@@ -54,7 +69,7 @@ function keywordsHighlighter(options) {
 
 
 	//var keywords = options.keywords.split(","); //Maybe add predefined Keywords right here
-  var keywords = "minimum,maximum,team,developers,developer,master,daily,best answers,best answer,increment,valuable,true,false".split(',');
+  var keywords = "minimum,maximum,team,developers,developer,master,daily,best answers,best answer,increment,valuable,true,false,three,best two answers,one".split(',');
 	//delete options.keywords;
 	addHighlights(document.body, keywords, options);
   //addHighlightsTest(document.body.innerText, keywords, options);
@@ -134,7 +149,7 @@ function checkForPopup(){ // check if Popup is needed or not
 	//get number of wanted crossed questions
 	//compare them, if unequal-->write string and showPopup
 	// write string to be printed out in popup-window here
-	crossedQuestions = "Multiple-choice-guide detected, that you crossed 3";
+	crossedQuestions = "Multiple-choice-guide detected, that you crossed " + number_of_ticks;
 	
 	showPopup(crossedQuestions)
 }
