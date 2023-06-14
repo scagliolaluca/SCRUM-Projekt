@@ -1,4 +1,6 @@
 var number_of_ticks = 0;
+var questions =[false, false, false, false, false];
+
 function keywordsHighlighter(options) {
 
 	var occurrences = 0;
@@ -165,3 +167,31 @@ function loadCheck() { //highlights page after clicking, but not the new page
 }
 
 loadCheck();
+
+function test(i){
+	console.log("In function");
+	if(questions[i]){
+		questions[i] = false;
+		console.log("set to false");
+	}
+	else{
+		questions[i] = true;
+		console.log("set to true");
+	}
+}
+
+function loadCheckTEST() { //highlights page after clicking, but not the new page
+
+	if (document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated").length != 0){
+		button = document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated");
+	
+	  	if(button.length == 4){
+			button[0].addEventListener("click", test(0));
+	  	}
+	}
+	else{
+		setTimeout(loadCheckTEST, 15);
+	  }
+  }
+
+  loadCheckTEST();
