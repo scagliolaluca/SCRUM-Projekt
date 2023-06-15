@@ -41,15 +41,21 @@ function keywordsHighlighter(options) {
 		highlighted.parentNode.replaceChild(span, highlighted);
 
 		switch (highlighted.data){
-			case "three": number_of_ticks = 3;
-				break;
 			case "best answer": number_of_ticks = 1;
 				break;
 			case "False": number_of_ticks = 1;
 				break;
-			case "best two answers": number_of_ticks = 2;
+			case "best two": number_of_ticks = 2;
 				break;
-			case "one": number_of_ticks = 1;
+			case "best three": number_of_ticks = 3;
+				break;
+			case "best four": number_of_ticks = 4;
+				break;
+			case "best five": number_of_ticks = 5;
+				break;
+			case "best six": number_of_ticks = 6;
+				break;
+			case "all that apply": number_of_ticks = -1;
 				break;
 			default: break;
 		}
