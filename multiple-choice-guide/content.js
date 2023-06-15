@@ -1,4 +1,4 @@
-var number_of_ticks = 0;
+var count_of_answers_to_tick = 0;
 //var questions =[false, false, false, false, false];
 
 
@@ -41,21 +41,21 @@ function keywordsHighlighter(options) {
 		highlighted.parentNode.replaceChild(span, highlighted);
 
 		switch (highlighted.data){
-			case "best answer": number_of_ticks = 1;
+			case "best answer": count_of_answers_to_tick = 1;
 				break;
-			case "False": number_of_ticks = 1;
+			case "False":count_of_answers_to_tick = 1;
 				break;
-			case "best two": number_of_ticks = 2;
+			case "best two": count_of_answers_to_tick = 2;
 				break;
-			case "best three": number_of_ticks = 3;
+			case "best three": count_of_answers_to_tick = 3;
 				break;
-			case "best four": number_of_ticks = 4;
+			case "best four": count_of_answers_to_tick = 4;
 				break;
-			case "best five": number_of_ticks = 5;
+			case "best five": count_of_answers_to_tick = 5;
 				break;
-			case "best six": number_of_ticks = 6;
+			case "best six": count_of_answers_to_tick = 6;
 				break;
-			case "all that apply": number_of_ticks = -1;
+			case "all that apply": count_of_answers_to_tick = -1;
 				break;
 			default: break;
 		}
@@ -120,19 +120,18 @@ setInterval(runHighlighter, 1000) //call function every 1000milliseconds to run 
 
 
 function showPopup(crossedQuestions) {
+		// set size of popupWindow
+		var screenWidth = window.screen.availWidth;
+		var screenHeight = window.screen.availHeight;
+		var popupWidth = screenWidth / 3;
+		var popupHeight = screenHeight / 3;
+		var popupLeft = (screenWidth - popupWidth) / 2;
+		var popupTop = (screenHeight - popupHeight) / 2;
 
-	// set size of popupWindow
-	var screenWidth = window.screen.availWidth;
-	var screenHeight = window.screen.availHeight;
-	var popupWidth = screenWidth/3;
-	var popupHeight = screenHeight/3;
-	var popupLeft = (screenWidth - popupWidth) / 2;
-	var popupTop = (screenHeight - popupHeight) / 2;
+		var popup = window.open("", "_blank", `width=${popupWidth},height=${popupHeight},left=${popupLeft},top=${popupTop}`);
 
-	var popup = window.open("", "_blank", `width=${popupWidth},height=${popupHeight},left=${popupLeft},top=${popupTop}`);
-
-	// Create the popup window
-	var popupContent = `
+		// Create the popup window
+		var popupContent = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -159,29 +158,36 @@ function showPopup(crossedQuestions) {
     </body>
     </html>
   `;
- 
-  popupContent = popupContent.replace("${crossedQuestions}", crossedQuestions);
-  
-  popup.document.open();
-  popup.document.write(popupContent);
-  popup.document.close();
 
-  // destroy popupWindow when okButton is clicked
-  var okButton = popup.document.getElementById("okButton");
-  okButton.addEventListener("click", function() {
-	popup.close();
-  });
+		popupContent = popupContent.replace("${crossedQuestions}", crossedQuestions);
+
+		popup.document.open();
+		popup.document.write(popupContent);
+		popup.document.close();
+
+		// destroy popupWindow when okButton is clicked
+		var okButton = popup.document.getElementById("okButton");
+		okButton.addEventListener("click", function () {
+			popup.close();
+		});
 }
+
   
 function checkForPopup(){ // check if Popup is needed or not
 
 	//call function to get number of currently crossed questions
 	curr_crossed_questions = GetCrossedQuestions();
+	if(curr_crossed_questions == count_of_answers_to_tick){
+		return 0;
+	}
 	//get number of wanted crossed questions
 	//compare them, if unequal-->write string and showPopup
 	// write string to be printed out in popup-window here
-	crossedQuestions = "Multiple-choice-guide detected, that you crossed " + number_of_ticks;
-	
+	if(count_of_answers_to_tick == -1){
+		crossedQuestions = "Please decide on yourself we can't find a rule!";
+	}else {
+		crossedQuestions = "Multiple-choice-guide detected, that you crossed " + count_of_answers_to_tick;
+	}
 	showPopup(crossedQuestions)
 }
 
