@@ -1,18 +1,15 @@
 var number_of_ticks = 0;
-var questions =[false, false, false, false, false];
+//var questions =[false, false, false, false, false];
 
 
 function GetCrossedQuestions() {
-
+    var crossed_questions = 0;
     if (document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated").length != 0){
         button = document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated");
         console.log(button);
-            if(button.length > 0){
-            button[0].addEventListener("click", test(0));
-            console.log("AriaChecked",typeof(button[0].getAttribute("aria-checked")));
-        }
+
         for(var i = 0; i < button.length; i++) {
-            if(button[i].getAttribute("aria-checked") === "true") {
+            if(button[i].getAttribute("aria-checked") === "true") { //for every button check aria-checked attribute
                crossed_questions += 1;
         }
         }
@@ -20,8 +17,8 @@ function GetCrossedQuestions() {
         return crossed_questions;
     }
     else{
-        setTimeout(loadCheckTEST, 15);
-        console.log("No buttons bro");
+        setTimeout(GetCrossedQuestions, 15);
+        console.log("No buttons yet");
       }
  }
 
@@ -194,30 +191,3 @@ function loadCheck() { //highlights page after clicking, but not the new page
 
 loadCheck();
 
-function test(i){
-	console.log("In function");
-	if(questions[i]){
-		questions[i] = false;
-		console.log("set to false");
-	}
-	else{
-		questions[i] = true;
-		console.log("set to true");
-	}
-}
-
-function loadCheckTEST() { //highlights page after clicking, but not the new page
-
-	if (document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated").length != 0){
-		button = document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated");
-	
-	  	if(button.length == 4){
-			button[0].addEventListener("click", test(0));
-	  	}
-	}
-	else{
-		setTimeout(loadCheckTEST, 15);
-	  }
-  }
-
-  loadCheckTEST();
