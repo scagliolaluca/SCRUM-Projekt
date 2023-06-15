@@ -99,7 +99,7 @@ function keywordsHighlighter(options) {
 
 
 	//var keywords = options.keywords.split(","); //Maybe add predefined Keywords right here
-  var keywords = "minimum,maximum,team,developers,developer,master,daily,best answers,best answer,increment,valuable,true,false,three,best two answers,one".split(',');
+       var keywords = "minimum,maximum,team,developers,developer,master,daily,best answers,best answer,increment,valuable,true,false,best three,best two,best four,best five,best six".split(',');
 	//delete options.keywords;
 	addHighlights(document.body, keywords, options);
   //addHighlightsTest(document.body.innerText, keywords, options);
