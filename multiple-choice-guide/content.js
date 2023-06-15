@@ -1,6 +1,31 @@
 var number_of_ticks = 0;
 var questions =[false, false, false, false, false];
 
+
+function GetCrossedQuestions() {
+
+    if (document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated").length != 0){
+        button = document.getElementsByClassName("ion-color ion-color-secondary md in-item interactive hydrated");
+        console.log(button);
+            if(button.length > 0){
+            button[0].addEventListener("click", test(0));
+            console.log("AriaChecked",typeof(button[0].getAttribute("aria-checked")));
+        }
+        for(var i = 0; i < button.length; i++) {
+            if(button[i].getAttribute("aria-checked") === "true") {
+               crossed_questions += 1;
+        }
+        }
+        console.log("Crossed Questions ", crossed_questions);
+        return crossed_questions;
+    }
+    else{
+        setTimeout(loadCheckTEST, 15);
+        console.log("No buttons bro");
+      }
+ }
+
+
 function keywordsHighlighter(options) {
 
 	var occurrences = 0;
@@ -148,6 +173,7 @@ function showPopup(crossedQuestions) {
 function checkForPopup(){ // check if Popup is needed or not
 
 	//call function to get number of currently crossed questions
+	curr_crossed_questions = GetCrossedQuestions();
 	//get number of wanted crossed questions
 	//compare them, if unequal-->write string and showPopup
 	// write string to be printed out in popup-window here
