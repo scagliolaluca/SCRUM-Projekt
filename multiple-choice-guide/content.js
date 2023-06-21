@@ -106,8 +106,8 @@ function keywordsHighlighter(options) {
   }*/
 
 
-    var numberKeywords = "best answers,best answer,best two,best three,best four,best five,best six,all that apply".split(','); 
-	var keywords = "minimum,maximum,team,developers,developer,master,daily,increment,valuable,untrue,true,false,incorrect,misleading".split(',');
+    var numberKeywords = "best answers,best answer,best two,best three,best four,best five,best six,all that apply,true,false".split(','); 
+	var keywords = "minimum,maximum,team,developers,developer,master,daily,increment,valuable,untrue,incorrect,misleading".split(',');
 
 	addHighlights(document.body, keywords, numberKeywords, options);
 
@@ -200,12 +200,17 @@ function checkForPopup(){ // check if Popup is needed or not
 	if(curr_crossed_questions == count_of_answers_to_tick){
 		return 0;
 	}
-	//get number of wanted crossed questions
-	//compare them, if unequal-->write string and showPopup
-	// write string to be printed out in popup-window here
+
+	// No popup when only one answer has to be crossed (Scrum has its own for that)
+	if(count_of_answers_to_tick == 1) {
+		return 0;
+	}
+	// Popup for "all that apply" questions
 	if(count_of_answers_to_tick == -1){
 		crossedQuestions = "Please decide on yourself we can't find a rule!";
-	}else {
+	}
+	// Popup for all other questions
+	else {
 		crossedQuestions = "Multiple-choice-guide detected, that you crossed " + count_of_answers_to_tick;
 	}
 	showPopup(crossedQuestions);
