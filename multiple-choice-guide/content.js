@@ -62,7 +62,7 @@ function keywordsHighlighter(options) {
 		occurrences++;
 	}
 
-	function addHighlights(node, keywords, options) {
+	function addHighlights(node, keywords, numberKeywords, options) {
 		var skip = 0;
 
 		var i;
@@ -71,21 +71,29 @@ function keywordsHighlighter(options) {
 				var keyword = keywords[i].toLowerCase();
 				var pos = node.data.toLowerCase().indexOf(keyword);
 				if (0 <= pos) {
-					highlight(node, pos, keyword, options);
+					highlight(node, pos, keyword, options[0]);
+					skip = 1;
+				}
+			}
+			for (i = 0; i < numberKeywords.length; i++) {
+				var keyword = numberKeywords[i].toLowerCase();
+				var pos = node.data.toLowerCase().indexOf(keyword);
+				if (0 <= pos) {
+					highlight(node, pos, keyword, options[1]);
 					skip = 1;
 				}
 			}
 		}
 		else if (1 == node.nodeType && !/(script|style|textarea)/i.test(node.tagName) && node.childNodes) {
 			for (i = 0; i < node.childNodes.length; i++) {
-				i += addHighlights(node.childNodes[i], keywords, options);
+				i += addHighlights(node.childNodes[i], keywords, numberKeywords, options);
 			}
 		}
 
 		return skip;
 	}
 
-  function addHighlightsTest(node, keywords, options){
+  /*function addHighlightsTest(node, keywords, options){
     
     var i;
     for (i = 0; i < keywords.length; i++) {
@@ -95,14 +103,13 @@ function keywordsHighlighter(options) {
       const highlightedPageText = node.replace(regex, highlightedText);
       document.body.innerHTML = highlightedPageText;
     }
-  }
+  }*/
 
 
-	//var keywords = options.keywords.split(","); //Maybe add predefined Keywords right here
-       var keywords = "minimum,maximum,team,developers,developer,master,daily,best answers,best answer,increment,valuable,true,false,best three,best two,best four,best five,best six".split(',');
-	//delete options.keywords;
-	addHighlights(document.body, keywords, options);
-  //addHighlightsTest(document.body.innerText, keywords, options);
+    var numberKeywords = "best answers,best answer,best two,best three,best four,best five,best six,all that apply".split(','); 
+	var keywords = "minimum,maximum,team,developers,developer,master,daily,increment,valuable,untrue,true,false,incorrect,misleading".split(',');
+
+	addHighlights(document.body, keywords, numberKeywords, options);
 
 }
 
@@ -111,8 +118,7 @@ function keywordsHighlighter(options) {
 //  buttonKnopf.addEventListener("click", runHighlighter, false);
 //}
 function runHighlighter(){          
-  //setTimeout(keywordsHighlighter({foreground: '#000000', background: '#ffff00'}), 10000);
-  keywordsHighlighter({foreground: '#000000', background: '#ffff00'}) 
+  keywordsHighlighter([{foreground: '#000000', background: '#ffff00'}, {foreground: '#000000', background: '#ff8000'}]) 
 
 }
 
