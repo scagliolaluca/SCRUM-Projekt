@@ -172,9 +172,23 @@ function showPopup(crossedQuestions) {
 		});
 }
 
+function getPrevButton() {
+     if(document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-left button-previous").length != 0) {
+        var previous_button = document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-left button-previous");
+        //console.log("Found prev button",previous_button);
+        //previous_button[0].click();
+        return previous_button;
+    }
+    else {
+        setTimeout(getPrevButton,15);
+        //console.log("NO PREV BUTTON YET");
+    }
+}
+
   
 function checkForPopup(){ // check if Popup is needed or not
-
+	//get previous-button
+	var previous_button = getPrevButton();
 	//call function to get number of currently crossed questions
 	curr_crossed_questions = GetCrossedQuestions();
 	if(curr_crossed_questions == count_of_answers_to_tick){
@@ -188,7 +202,8 @@ function checkForPopup(){ // check if Popup is needed or not
 	}else {
 		crossedQuestions = "Multiple-choice-guide detected, that you crossed " + count_of_answers_to_tick;
 	}
-	showPopup(crossedQuestions)
+	showPopup(crossedQuestions);
+	previous_button[0].click();
 }
 
 function loadCheck() { //highlights page after clicking, but not the new page
