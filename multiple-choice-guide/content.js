@@ -205,13 +205,17 @@ function checkForPopup(){ // check if Popup is needed or not
 	if(count_of_answers_to_tick == 1) {
 		return 0;
 	}
+	// No popup when you havent crossed a question yet (Scrum has its own for that)
+	if(curr_crossed_questions == 0) {
+		return 0;
+	}
 	// Popup for "all that apply" questions
 	if(count_of_answers_to_tick == -1){
 		crossedQuestions = "Please decide on yourself we can't find a rule!";
 	}
 	// Popup for all other questions
 	else {
-		crossedQuestions = "Multiple-choice-guide detected, that you crossed " + count_of_answers_to_tick;
+		crossedQuestions = "Multiple-choice-guide detected, that you crossed " + curr_crossed_questions + " but " + count_of_answers_to_tick + " are requested";
 	}
 	showPopup(crossedQuestions);
 	previous_button[0].click();
