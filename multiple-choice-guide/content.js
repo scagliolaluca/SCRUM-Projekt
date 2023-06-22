@@ -106,8 +106,8 @@ function keywordsHighlighter(options) {
   }*/
 
 
-    var numberKeywords = "best answers,best answer,best two,best three,best four,best five,best six,all that apply,true,false".split(','); 
-	var keywords = "minimum,maximum,team,developers,developer,master,daily,increment,valuable,untrue,incorrect,misleading".split(',');
+    var numberKeywords = "best answers,best answer,best two,best three,best four,best five,best six,all that apply".split(','); 
+	var keywords = "minimum,maximum,team,developers,developer,master,daily,increment,valuable,untrue,incorrect,misleading,true,false".split(',');
 
 	addHighlights(document.body, keywords, numberKeywords, options);
 
