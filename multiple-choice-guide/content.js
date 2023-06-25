@@ -126,56 +126,95 @@ setInterval(runHighlighter, 1000) //call function every 1000milliseconds to run 
 
 
 function showPopup(crossedQuestions) {
-		// set size of popupWindow
-		var screenWidth = window.screen.availWidth;
-		var screenHeight = window.screen.availHeight;
-		var popupWidth = screenWidth / 3;
-		var popupHeight = screenHeight / 3;
-		var popupLeft = (screenWidth - popupWidth) / 2;
-		var popupTop = (screenHeight - popupHeight) / 2;
+	// set size of popupWindow
+	var screenWidth = window.screen.availWidth;
+	var screenHeight = window.screen.availHeight;
+	var popupWidth = screenWidth / 3;
+	var popupHeight = screenHeight / 3;
+	var popupLeft = (screenWidth - popupWidth) / 2;
+	var popupTop = (screenHeight - popupHeight) / 2;
 
-		var popup = window.open("", "_blank", `width=${popupWidth},height=${popupHeight},left=${popupLeft},top=${popupTop}`);
+	var popup = window.open("", "Multiple Choice Guide", `width=${popupWidth},height=${popupHeight},left=${popupLeft},top=${popupTop}`);
 
-		// Create the popup window
-		var popupContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Popup Window</title>
-      <style>
-        body {
-          	text-align: center;
-        }
-		h2 {
-			font-size: 5vw;
-		}
-		p  {
-			font-size: 3vw;
-		}
-		button {
-			font-size: 3vw;
-		}
-      </style>
-    </head>
-    <body>
-      <h2>Wrong amount of Questions crossed!</h2>
-      <p> ${crossedQuestions} </p>
-	  <button id="okButton">OK</button>
-    </body>
-    </html>
-  `;
+	// Create the popup window content
+	var popupContent = `
+  <!doctype html>
+  <html>
+  <head>
+    <title>Mulitple Choice Guide</title>
+    <style>
+      /* Your styles here */
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      .popup-content {
+        text-align: center;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      }
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 16px;
+        margin-bottom: 20px;
+       }
+      .button-container {
+		position: relative;
+	  }
+	  button {
+		position: relative;
+		z-index: 1;
+		font-size: 16px;
+		border-radius: 20px;
+		padding: 10px 20px;
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.5s ease;
+		/* Apply a linear gradient for the background */
+		background-image: linear-gradient(to right, #45a049, #4caf50);
+	  }
+	  button:hover {
+		/* Change the background color of the button */
+		background-image: linear-gradient(to right, #4caf50, #45a049);
+		color: #404040;
+	  }
+    </style>
+    
+  </head>
+  <body>
+    <div class="popup-content">
+      <h2>Detected problem</h2>
+      <p>${crossedQuestions}</p>
+      <div class="button-container">
+        <button id="okButton">OK</button>
+      </div>
+    </div>
+  </body>
+  </html>
+`;
 
-		popupContent = popupContent.replace("${crossedQuestions}", crossedQuestions);
+	popupContent = popupContent.replace("${crossedQuestions}", crossedQuestions);
 
-		popup.document.open();
-		popup.document.write(popupContent);
-		popup.document.close();
+	popup.document.open();
+	popup.document.write(popupContent);
+	popup.document.close();
 
-		// destroy popupWindow when okButton is clicked
-		var okButton = popup.document.getElementById("okButton");
-		okButton.addEventListener("click", function () {
-			popup.close();
-		});
+	// destroy popupWindow when okButton is clicked
+	var okButton = popup.document.getElementById("okButton");
+	okButton.addEventListener("click", function () {
+		popup.close();
+	});
 }
 
 function getPrevButton() {
