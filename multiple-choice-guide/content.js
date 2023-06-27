@@ -1,6 +1,4 @@
 var count_of_answers_to_tick = 0;
-//var questions =[false, false, false, false, false];
-
 
 function GetCrossedQuestions() {
     var crossed_questions = 0;
@@ -9,7 +7,7 @@ function GetCrossedQuestions() {
         console.log(button);
 
         for(var i = 0; i < button.length; i++) {
-            if(button[i].getAttribute("aria-checked") === "true") { //for every button check aria-checked attribute
+            if(button[i].getAttribute("aria-checked") === "true") {
                crossed_questions += 1;
         }
         }
@@ -21,7 +19,6 @@ function GetCrossedQuestions() {
         console.log("No buttons yet");
       }
  }
-
 
 function keywordsHighlighter(options) {
 
@@ -93,19 +90,6 @@ function keywordsHighlighter(options) {
 		return skip;
 	}
 
-  /*function addHighlightsTest(node, keywords, options){
-    
-    var i;
-    for (i = 0; i < keywords.length; i++) {
-      var keyword = keywords[i].toLowerCase();
-      const regex = new RegExp('\\b${keyword}\\b', 'gi');
-      const highlightedText = `<span style="background-color: yellow">${keyword}</span>`;
-      const highlightedPageText = node.replace(regex, highlightedText);
-      document.body.innerHTML = highlightedPageText;
-    }
-  }*/
-
-
     var numberKeywords = "best answers,best answer,best two,best three,best four,best five,best six,all that apply".split(','); 
 	var keywords = "minimum,maximum,team,developers,developer,master,daily,increment,valuable,untrue,incorrect,misleading,true,false".split(',');
 
@@ -113,10 +97,6 @@ function keywordsHighlighter(options) {
 
 }
 
-//var buttonKnopf = document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-right button-next");
-//if (buttonKnopf.length != 0){
-//  buttonKnopf.addEventListener("click", runHighlighter, false);
-//}
 function runHighlighter(){          
   keywordsHighlighter([{foreground: '#000000', background: '#ffff00'}, {foreground: '#000000', background: '#ff8000'}]) 
 
@@ -220,13 +200,10 @@ function showPopup(crossedQuestions) {
 function getPrevButton() {
      if(document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-left button-previous").length != 0) {
         var previous_button = document.getElementsByClassName("md button button-solid ion-activatable ion-focusable hydrated ion-float-left button-previous");
-        //console.log("Found prev button",previous_button);
-        //previous_button[0].click();
         return previous_button;
     }
     else {
         setTimeout(getPrevButton,15);
-        //console.log("NO PREV BUTTON YET");
     }
 }
 
@@ -251,13 +228,15 @@ function checkForPopup(){ // check if Popup is needed or not
 	// Popup for "all that apply" questions
 	if(count_of_answers_to_tick == -1){
 		crossedQuestions = "Please decide on yourself we can't find a rule!";
+		showPopup(crossedQuestions);
 	}
 	// Popup for all other questions
 	else {
 		crossedQuestions = "Multiple-choice-guide detected, that you crossed " + curr_crossed_questions + " but " + count_of_answers_to_tick + " are requested";
-	}
 	showPopup(crossedQuestions);
 	previous_button[0].click();
+	}
+	
 }
 
 function loadCheck() { //highlights page after clicking, but not the new page
