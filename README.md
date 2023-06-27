@@ -2,10 +2,9 @@
 
 ## Chrome Extension:
 Add this chrome extension to your chrome extensions by activating the "developer mode" in your extension-manager. Then go to "Load Unpacked" and select the "MultipleChoiceGuide" Folder. 
-
-## Toolchain: 
 For the usage of this Chrome Extension, only Google Chrome and this repository is needed. The Extension works with JavaScript for any logic and HTML and CSS for displaying things.
 
+## Usage
 To use this extension, load the multiple-choice-guide folder has to be selected on the google chromes extension side. Activate "developer mode" and go to "load unpacked".
 ---
 
